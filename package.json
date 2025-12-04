@@ -1,0 +1,32 @@
+{
+  "name": "vanilla-table",
+  "version": "0.1.0",
+  "description": "Lightweight vanilla JavaScript table library with sorting, pagination, filtering, and export capabilities",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "table",
+    "datatable",
+    "vanilla",
+    "javascript",
+    "sorting",
+    "pagination",
+    "export",
+    "filtering",
+    "csv",
+    "excel",
+    "json"
+  ],
+  "author": "matejkadlec",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/matejkadlec/vanilla-table.git"
+  },
+  "bugs": {
+    "url": "https://github.com/matejkadlec/vanilla-table/issues"
+  },
+  "homepage": "https://github.com/matejkadlec/vanilla-table#readme"
+}
