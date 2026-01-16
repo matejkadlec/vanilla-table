@@ -1,0 +1,385 @@
+/* ==================== Layout Styles (Moved from example.html) ==================== */
+
+:root {
+  --sidebar-width: 280px;
+  --primary-color: linear-gradient(135deg, #0a76e9 0%, #639bd8 100%);
+  --border-color: #ced4da;
+  --bg-gradient: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+}
+
+.vanilla-table-layout-body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  background: #f8f9fa;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.vanilla-table-layout-body * {
+  box-sizing: border-box;
+}
+
+/* Sidebar Styles */
+.vanilla-sidebar {
+  width: var(--sidebar-width);
+  background: #fff;
+  border-right: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  overflow-y: auto;
+  flex-shrink: 0;
+  z-index: 20;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+}
+
+.vanilla-sidebar-branding {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  font-size: 20px;
+  font-weight: 600;
+  color: #494949;
+  letter-spacing: 0.3px;
+}
+
+.vanilla-control-group {
+  margin-bottom: 20px;
+}
+
+.vanilla-control-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.vanilla-control-group input,
+.vanilla-control-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  background: #fff;
+}
+
+.vanilla-control-group input:focus,
+.vanilla-control-group select:focus {
+  border-color: #999;
+  outline: none;
+}
+
+.vanilla-control-group select {
+  cursor: pointer;
+}
+
+.vanilla-actions-group {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.vanilla-btn {
+  width: 100%;
+  padding: 10px;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: .3s;
+}
+
+.vanilla-btn:hover {
+  opacity: 0.8;
+}
+
+.vanilla-btn-secondary {
+  background: linear-gradient(135deg, #505558 0%, #6c757d 100%);
+}
+
+.vanilla-btn-secondary:hover {
+  opacity: 0.8;
+}
+
+/* Main Content Styles */
+.vanilla-main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-gradient);
+  padding: 30px;
+  overflow: hidden;
+  position: relative;
+}
+
+.vanilla-content-header {
+  margin-bottom: 20px;
+  color: white;
+}
+
+.vanilla-content-header h1 {
+  font-size: 28px;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.vanilla-content-header .subtitle {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 16px;
+  padding-left: 8px;
+}
+
+.vanilla-table-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.vanilla-table-info-bar {
+  padding: 10px 20px;
+  border-bottom: 1px solid #eee;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: #666;
+}
+
+.vanilla-table-scroll {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+
+.vanilla-table-pagination {
+  padding: 0px;
+  border-top: 1px solid #eee;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+}
+
+
+.vanilla-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  table-layout: fixed; /* Ensures columns have stable widths */
+}
+
+/* Ensure cells don't overflow in fixed layout */
+.vanilla-table th, 
+.vanilla-table td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vanilla-table thead th {
+  text-align: left;
+  padding: 8px 20px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #ccc;
+  font-weight: 600;
+  color: #212529;
+  font-size: 14px;
+}
+
+.vanilla-table th:first-child,
+.vanilla-table td:first-child {
+  padding-left: 24px;
+}
+
+.vanilla-table tbody td {
+  padding: 10px 16px;
+  border-bottom: 1px solid #ddd;
+  color: #333;
+  font-size: 14px;
+}
+
+.vanilla-table tbody tr:hover {
+  background-color: #aec4eb;
+}
+
+/* ==================== Zebra Striping ==================== */
+
+.vanilla-table-zebra tbody tr.odd {
+  background-color: #fff;
+}
+
+.vanilla-table-zebra tbody tr.even {
+  background-color: #dee6ef;
+}
+
+/* ==================== Sorting Styles ==================== */
+
+.vanilla-table thead th.sortable {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  padding-right: 40px;
+}
+
+.vanilla-table thead th.sortable::after {
+  content: '⇅';
+  position: absolute;
+  right: 12px;
+  opacity: 0.8;
+  font-size: 14px;
+}
+
+.vanilla-table thead th.sortable:hover::after {
+  opacity: 1;
+}
+
+.vanilla-table thead th.sort-asc::after {
+  content: '⇊';
+  opacity: 1;
+}
+
+.vanilla-table thead th.sort-desc::after {
+  content: '⇈';
+  opacity: 1;
+}
+
+/* ==================== Pagination Styles ==================== */
+
+.vanilla-table-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  margin: 16px 0;
+}
+
+.pagination-btn {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: .3s;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: #ddd;
+  transition: .3s;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-btn.active {
+  background: var(--primary-color) !important;
+  color: white;
+  border-color: #007bff;
+}
+
+.pagination-btn.active:hover:not(:disabled) {
+  opacity: 0.8;
+  transition: .3s;
+}
+
+.pagination-ellipsis {
+  padding: 6px;
+  color: #6c757d;
+}
+
+.vanilla-table-info {
+  text-align: center;
+  color: #333;
+  font-size: 13px;
+  margin: 8px 0;
+}
+
+/* ==================== Search/Filter Styles ==================== */
+
+.vanilla-table-search {
+  margin-bottom: 16px;
+}
+
+.vanilla-table-search input {
+  width: 100%;
+  max-width: 400px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.vanilla-table-search input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+/* ==================== No Results ==================== */
+
+.vanilla-table-no-results td {
+  text-align: center;
+  padding: 40px 16px;
+  color: #6c757d;
+  font-style: italic;
+}
+
+/* ==================== Responsive ==================== */
+
+@media (max-width: 768px) {
+  .vanilla-table {
+    font-size: 12px;
+  }
+
+  .vanilla-table thead th,
+  .vanilla-table tbody td {
+    padding: 8px 12px;
+  }
+
+  .pagination-btn {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+}
+
+/* ==================== Utilities ==================== */
+
+.suspend-transitions,
+.suspend-transitions * {
+  transition: none !important;
+  animation: none !important;
+}
+
+.vanilla-table-wrapper {
+  overflow-x: auto;
+  margin: 20px 0;
+}
+
+/* Optional: Container with shadow */
+.vanilla-table-container {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}

@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VanillaTable Demo</title>
+
+    <!-- Include VanillaTable CSS -->
+    <link rel="stylesheet" href="src/table.css" />
+  </head>
+  <body class="vanilla-table-layout-body">
+    <!-- Sidebar / Tools -->
+    <aside class="vanilla-sidebar">
+      <div class="vanilla-sidebar-branding">
+        🎨 Vanilla Table Demo
+      </div>
+
+      <div class="vanilla-control-group">
+        <label for="search">Search</label>
+        <input type="text" id="search" placeholder="Type to search..." />
+      </div>
+
+      <div class="vanilla-control-group">
+        <label for="department-filter">Department</label>
+        <select id="department-filter">
+          <option value="">All Departments</option>
+          <option value="Engineering">Engineering</option>
+          <option value="Marketing">Marketing</option>
+          <option value="Sales">Sales</option>
+          <option value="HR">HR</option>
+        </select>
+      </div>
+
+      <div class="vanilla-control-group">
+        <label for="page-size">Rows per page</label>
+        <select id="page-size">
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="25" selected>25</option>
+          <option value="50">50</option>
+        </select>
+      </div>
+
+      <div class="vanilla-actions-group">
+        <button class="vanilla-btn vanilla-btn-secondary" onclick="clearAllFilters()">
+          Clear Filters
+        </button>
+        <button class="vanilla-btn" onclick="table.exportCSV()">Export CSV</button>
+        <button class="vanilla-btn" onclick="table.exportJSON()">Export JSON</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="vanilla-main-content">
+      <div class="vanilla-content-header">
+        <p class="subtitle">
+          Lightweight vanilla JavaScript table library with sorting, pagination,
+          filtering, row count and export.
+        </p>
+      </div>
+
+      <div class="vanilla-table-card">
+        <div class="vanilla-table-info-bar">
+           <div id="table-info" class="vanilla-table-info"></div>
+        </div>
+
+        <div class="vanilla-table-scroll">
+          <table id="demo-table" class="vanilla-table">
+            <thead>
+              <tr>
+                <th data-field="id" style="width: 50px;">ID</th>
+                <th data-field="name">Name</th>
+                <th data-field="email">Email</th>
+                <th data-field="department">Department</th>
+                <th data-field="salary">Salary</th>
+                <th data-field="status">Status</th>
+                <th data-field="joinDate">Join Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Data will be rendered here -->
+            </tbody>
+          </table>
+        </div>
+
+        <div id="pagination" class="vanilla-table-pagination"></div>
+      </div>
+    </main>
+
+    <!-- Include all VanillaTable modules -->
+    <script src="src/core.js"></script>
+    <script src="src/render.js"></script>
+    <script src="src/sort.js"></script>
+    <script src="src/filters.js"></script>
+    <script src="src/pagination.js"></script>
+    <script src="src/exports.js"></script>
+    <script src="index.js"></script>
+
+    <script>
+      // Sample data
+      const sampleData = [
+        {
+          id: 1,
+          name: "John Doe",
+          email: "john@example.com",
+          department: "Engineering",
+          salary: 95000,
+          status: "Active",
+          joinDate: "2020-03-15",
+        },
+        {
+          id: 2,
+          name: "Jane Smith",
+          email: "jane@example.com",
+          department: "Marketing",
+          salary: 75000,
+          status: "Active",
+          joinDate: "2019-07-22",
+        },
+        {
+          id: 3,
+          name: "Bob Johnson",
+          email: "bob@example.com",
+          department: "Sales",
+          salary: 82000,
+          status: "Inactive",
+          joinDate: "2021-01-10",
+        },
+        {
+          id: 4,
+          name: "Alice Williams",
+          email: "alice@example.com",
+          department: "Engineering",
+          salary: 105000,
+          status: "Active",
+          joinDate: "2018-11-05",
+        },
+        {
+          id: 5,
+          name: "Charlie Brown",
+          email: "charlie@example.com",
+          department: "HR",
+          salary: 68000,
+          status: "On Leave",
+          joinDate: "2020-09-12",
+        },
+        {
+          id: 6,
+          name: "Diana Prince",
+          email: "diana@example.com",
+          department: "Engineering",
+          salary: 115000,
+          status: "Active",
+          joinDate: "2017-04-18",
+        },
+        {
+          id: 7,
+          name: "Ethan Hunt",
+          email: "ethan@example.com",
+          department: "Sales",
+          salary: 88000,
+          status: "Active",
+          joinDate: "2019-12-01",
+        },
+        {
+          id: 8,
+          name: "Fiona Green",
+          email: "fiona@example.com",
+          department: "Marketing",
+          salary: 72000,
+          status: "Inactive",
+          joinDate: "2021-06-25",
+        },
+        {
+          id: 9,
+          name: "George Martin",
+          email: "george@example.com",
+          department: "Engineering",
+          salary: 98000,
+          status: "Active",
+          joinDate: "2020-02-14",
+        },
+        {
+          id: 10,
+          name: "Hannah Lee",
+          email: "hannah@example.com",
+          department: "HR",
+          salary: 65000,
+          status: "Active",
+          joinDate: "2022-01-08",
+        },
+        {
+          id: 11,
+          name: "Ian Malcolm",
+          email: "ian@example.com",
+          department: "Engineering",
+          salary: 110000,
+          status: "On Leave",
+          joinDate: "2018-08-22",
+        },
+        {
+          id: 12,
+          name: "Julia Roberts",
+          email: "julia@example.com",
+          department: "Sales",
+          salary: 79000,
+          status: "Active",
+          joinDate: "2021-03-30",
+        },
+        {
+          id: 13,
+          name: "Kevin Hart",
+          email: "kevin@example.com",
+          department: "Marketing",
+          salary: 76000,
+          status: "Terminated",
+          joinDate: "2019-10-15",
+        },
+        {
+          id: 14,
+          name: "Laura Palmer",
+          email: "laura@example.com",
+          department: "HR",
+          salary: 70000,
+          status: "Active",
+          joinDate: "2020-11-20",
+        },
+        {
+          id: 15,
+          name: "Michael Scott",
+          email: "michael@example.com",
+          department: "Sales",
+          salary: 85000,
+          joinDate: "2018-05-12",
+        },
+        {
+          id: 16,
+          name: "Nancy Drew",
+          email: "nancy@example.com",
+          department: "Engineering",
+          salary: 102000,
+          joinDate: "2019-09-08",
+        },
+        {
+          id: 17,
+          name: "Oscar Wilde",
+          email: "oscar@example.com",
+          department: "Marketing",
+          salary: 73000,
+          joinDate: "2021-07-14",
+        },
+        {
+          id: 18,
+          name: "Pam Beesly",
+          email: "pam@example.com",
+          department: "HR",
+          salary: 67000,
+          joinDate: "2020-04-25",
+        },
+        {
+          id: 19,
+          name: "Quinn Fabray",
+          email: "quinn@example.com",
+          department: "Sales",
+          salary: 81000,
+          joinDate: "2019-11-30",
+        },
+        {
+          id: 20,
+          name: "Rachel Green",
+          email: "rachel@example.com",
+          department: "Marketing",
+          salary: 77000,
+          joinDate: "2021-02-18",
+        },
+        {
+          id: 21,
+          name: "Steve Rogers",
+          email: "steve@example.com",
+          department: "Engineering",
+          salary: 112000,
+          joinDate: "2017-06-12",
+        },
+        {
+          id: 22,
+          name: "Tony Stark",
+          email: "tony@example.com",
+          department: "Engineering",
+          salary: 125000,
+          joinDate: "2016-09-20",
+        },
+        {
+          id: 23,
+          name: "Natasha Romanoff",
+          email: "natasha@example.com",
+          department: "Sales",
+          salary: 89000,
+          joinDate: "2019-03-18",
+        },
+        {
+          id: 24,
+          name: "Bruce Banner",
+          email: "bruce@example.com",
+          department: "Engineering",
+          salary: 108000,
+          joinDate: "2018-01-25",
+        },
+        {
+          id: 25,
+          name: "Thor Odinson",
+          email: "thor@example.com",
+          department: "Marketing",
+          salary: 78000,
+          joinDate: "2020-05-14",
+        },
+        {
+          id: 26,
+          name: "Clint Barton",
+          email: "clint@example.com",
+          department: "Sales",
+          salary: 84000,
+          joinDate: "2019-08-09",
+        },
+        {
+          id: 27,
+          name: "Wanda Maximoff",
+          email: "wanda@example.com",
+          department: "HR",
+          salary: 71000,
+          joinDate: "2021-04-22",
+        },
+        {
+          id: 28,
+          name: "Vision",
+          email: "vision@example.com",
+          department: "Engineering",
+          salary: 99000,
+          joinDate: "2020-10-11",
+        },
+        {
+          id: 29,
+          name: "Peter Parker",
+          email: "peter@example.com",
+          department: "Engineering",
+          salary: 87000,
+          joinDate: "2022-02-15",
+        },
+        {
+          id: 30,
+          name: "Scott Lang",
+          email: "scott@example.com",
+          department: "Sales",
+          salary: 80000,
+          joinDate: "2021-08-30",
+        },
+        {
+          id: 31,
+          name: "Hope Van Dyne",
+          email: "hope@example.com",
+          department: "Marketing",
+          salary: 74000,
+          joinDate: "2020-12-05",
+        },
+        {
+          id: 32,
+          name: "Carol Danvers",
+          email: "carol@example.com",
+          department: "Engineering",
+          salary: 118000,
+          joinDate: "2017-11-19",
+        },
+        {
+          id: 33,
+          name: "Nick Fury",
+          email: "nick@example.com",
+          department: "HR",
+          salary: 72000,
+          joinDate: "2016-04-08",
+        },
+        {
+          id: 34,
+          name: "Maria Hill",
+          email: "maria@example.com",
+          department: "HR",
+          salary: 69000,
+          joinDate: "2019-01-14",
+        },
+        {
+          id: 35,
+          name: "Phil Coulson",
+          email: "phil@example.com",
+          department: "Marketing",
+          salary: 77000,
+          joinDate: "2018-07-23",
+        },
+        {
+          id: 36,
+          name: "Sam Wilson",
+          email: "sam@example.com",
+          department: "Sales",
+          salary: 83000,
+          joinDate: "2020-06-17",
+        },
+        {
+          id: 37,
+          name: "Bucky Barnes",
+          email: "bucky@example.com",
+          department: "Engineering",
+          salary: 96000,
+          joinDate: "2019-05-28",
+        },
+        {
+          id: 38,
+          name: "T'Challa",
+          email: "tchalla@example.com",
+          department: "Engineering",
+          salary: 120000,
+          joinDate: "2017-03-09",
+        },
+        {
+          id: 39,
+          name: "Shuri",
+          email: "shuri@example.com",
+          department: "Engineering",
+          salary: 114000,
+          joinDate: "2018-09-16",
+        },
+        {
+          id: 40,
+          name: "Stephen Strange",
+          email: "stephen@example.com",
+          department: "Engineering",
+          salary: 122000,
+          joinDate: "2017-08-04",
+        },
+        {
+          id: 41,
+          name: "Wong",
+          email: "wong@example.com",
+          department: "HR",
+          salary: 66000,
+          joinDate: "2020-01-21",
+        },
+        {
+          id: 42,
+          name: "Pepper Potts",
+          email: "pepper@example.com",
+          department: "Marketing",
+          salary: 79000,
+          joinDate: "2016-12-11",
+        },
+        {
+          id: 43,
+          name: "Happy Hogan",
+          email: "happy@example.com",
+          department: "Sales",
+          salary: 78000,
+          joinDate: "2019-04-06",
+        },
+        {
+          id: 44,
+          name: "James Rhodes",
+          email: "rhodes@example.com",
+          department: "Engineering",
+          salary: 107000,
+          joinDate: "2018-02-28",
+        },
+        {
+          id: 45,
+          name: "Loki Laufeyson",
+          email: "loki@example.com",
+          department: "Marketing",
+          salary: 75000,
+          joinDate: "2021-05-19",
+        },
+        {
+          id: 46,
+          name: "Gamora",
+          email: "gamora@example.com",
+          department: "Sales",
+          salary: 86000,
+          joinDate: "2020-08-13",
+        },
+        {
+          id: 47,
+          name: "Peter Quill",
+          email: "quill@example.com",
+          department: "Sales",
+          salary: 81000,
+          joinDate: "2021-09-07",
+        },
+        {
+          id: 48,
+          name: "Rocket Raccoon",
+          email: "rocket@example.com",
+          department: "Engineering",
+          salary: 101000,
+          joinDate: "2019-12-22",
+        },
+        {
+          id: 49,
+          name: "Groot",
+          email: "groot@example.com",
+          department: "HR",
+          salary: 64000,
+          joinDate: "2022-03-01",
+        },
+        {
+          id: 50,
+          name: "Drax",
+          email: "drax@example.com",
+          department: "Sales",
+          salary: 77000,
+          joinDate: "2020-07-26",
+        },
+        {
+          id: 51,
+          name: "Mantis",
+          email: "mantis@example.com",
+          department: "HR",
+          salary: 68000,
+          joinDate: "2021-11-12",
+        },
+        {
+          id: 52,
+          name: "Nebula",
+          email: "nebula@example.com",
+          department: "Engineering",
+          salary: 97000,
+          joinDate: "2019-02-09",
+        },
+        {
+          id: 53,
+          name: "Valkyrie",
+          email: "valkyrie@example.com",
+          department: "Marketing",
+          salary: 74000,
+          joinDate: "2020-09-24",
+        },
+        {
+          id: 54,
+          name: "Okoye",
+          email: "okoye@example.com",
+          department: "Sales",
+          salary: 82000,
+          joinDate: "2018-10-15",
+        },
+        {
+          id: 55,
+          name: "M'Baku",
+          email: "mbaku@example.com",
+          department: "Engineering",
+          salary: 93000,
+          joinDate: "2019-06-03",
+        },
+      ];
+
+      // Initialize VanillaTable
+      const table = new VanillaTable("#demo-table", {
+        data: sampleData,
+        columns: [
+          { data: "id", title: "ID" },
+          { data: "name", title: "Name" },
+          { data: "email", title: "Email" },
+          { data: "department", title: "Department" },
+          {
+            data: "salary",
+            title: "Salary",
+            render: (value) => `$${value.toLocaleString()}`,
+          },
+          { 
+            data: "status", 
+            title: "Status",
+            render: (value) => {
+              let color = '#28a745';
+              if (value === 'Inactive') color = '#dc3545';
+              if (value === 'On Leave') color = '#ffc107';
+              if (value === 'Terminated') color = '#343a40';
+              return `<span style="color: ${color}; font-weight: bold;">${value || 'Active'}</span>`;
+            }
+          },
+          { data: "joinDate", title: "Join Date" },
+        ],
+        pagination: true,
+        perPage: 25,
+        paginationInfo: "#table-info",
+        paginationControls: "#pagination",
+        sorting: true,
+        search: true,
+        searchInput: "#search",
+        zebra: true,
+      });
+
+      // Department filter
+      document
+        .getElementById("department-filter")
+        .addEventListener("change", (e) => {
+          if (e.target.value) {
+            table.applyFilters({ department: e.target.value });
+          } else {
+            table.clearFilters();
+          }
+        });
+
+      // Page size selector
+      document.getElementById("page-size").addEventListener("change", (e) => {
+        table.setPageSize(parseInt(e.target.value, 10));
+      });
+
+      // Helper function to clear all filters and reset UI
+      function clearAllFilters() {
+        table.clearFilters();
+        document.getElementById("search").value = "";
+        document.getElementById("department-filter").value = "";
+      }
+
+      console.log("VanillaTable initialized!");
+      console.log(
+        "Try clicking on column headers to sort (Shift+Click for multi-column sort)"
+      );
+    </script>
+  </body>
+</html>
