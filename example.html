@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -11,9 +11,7 @@
   <body class="vanilla-table-layout-body">
     <!-- Sidebar / Tools -->
     <aside class="vanilla-sidebar">
-      <div class="vanilla-sidebar-branding">
-        🎨 Vanilla Table Demo
-      </div>
+      <div class="vanilla-sidebar-branding">🎨 Vanilla Table Demo</div>
 
       <div class="vanilla-control-group">
         <label for="search">Search</label>
@@ -42,11 +40,18 @@
       </div>
 
       <div class="vanilla-actions-group">
-        <button class="vanilla-btn vanilla-btn-secondary" onclick="clearAllFilters()">
+        <button
+          class="vanilla-btn vanilla-btn-secondary"
+          onclick="clearAllFilters()"
+        >
           Clear Filters
         </button>
-        <button class="vanilla-btn" onclick="table.exportCSV()">Export CSV</button>
-        <button class="vanilla-btn" onclick="table.exportJSON()">Export JSON</button>
+        <button class="vanilla-btn" onclick="table.exportCSV()">
+          Export CSV
+        </button>
+        <button class="vanilla-btn" onclick="table.exportJSON()">
+          Export JSON
+        </button>
       </div>
     </aside>
 
@@ -61,14 +66,14 @@
 
       <div class="vanilla-table-card">
         <div class="vanilla-table-info-bar">
-           <div id="table-info" class="vanilla-table-info"></div>
+          <div id="table-info" class="vanilla-table-info"></div>
         </div>
 
         <div class="vanilla-table-scroll">
           <table id="demo-table" class="vanilla-table">
             <thead>
               <tr>
-                <th data-field="id" style="width: 50px;">ID</th>
+                <th data-field="id" style="width: 50px">ID</th>
                 <th data-field="name">Name</th>
                 <th data-field="email">Email</th>
                 <th data-field="department">Department</th>
@@ -87,14 +92,8 @@
       </div>
     </main>
 
-    <!-- Include all VanillaTable modules -->
-    <script src="src/core.js"></script>
-    <script src="src/render.js"></script>
-    <script src="src/sort.js"></script>
-    <script src="src/filters.js"></script>
-    <script src="src/pagination.js"></script>
-    <script src="src/exports.js"></script>
-    <script src="index.js"></script>
+    <!-- Include bundled VanillaTable -->
+    <script src="dist/vanilla-table-0.4.0.js"></script>
 
     <script>
       // Sample data
@@ -568,16 +567,16 @@
             title: "Salary",
             render: (value) => `$${value.toLocaleString()}`,
           },
-          { 
-            data: "status", 
+          {
+            data: "status",
             title: "Status",
             render: (value) => {
-              let color = '#28a745';
-              if (value === 'Inactive') color = '#dc3545';
-              if (value === 'On Leave') color = '#ffc107';
-              if (value === 'Terminated') color = '#343a40';
-              return `<span style="color: ${color}; font-weight: bold;">${value || 'Active'}</span>`;
-            }
+              let color = "#28a745";
+              if (value === "Inactive") color = "#dc3545";
+              if (value === "On Leave") color = "#ffc107";
+              if (value === "Terminated") color = "#343a40";
+              return `<span style="color: ${color}; font-weight: bold;">${value || "Active"}</span>`;
+            },
           },
           { data: "joinDate", title: "Join Date" },
         ],
@@ -616,7 +615,7 @@
 
       console.log("VanillaTable initialized!");
       console.log(
-        "Try clicking on column headers to sort (Shift+Click for multi-column sort)"
+        "Try clicking on column headers to sort (Shift+Click for multi-column sort)",
       );
     </script>
   </body>

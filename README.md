@@ -2,7 +2,7 @@
 
 > Lightweight vanilla JavaScript table library with sorting, pagination, filtering, and export capabilities
 
-[![npm version](https://badge.fury.io/js/vanilla-table.svg)](https://www.npmjs.com/package/vanilla-table)
+[![npm version](https://img.shields.io/npm/v/vanilla-table.svg)](https://www.npmjs.com/package/vanilla-table)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## ✨ Features
@@ -20,7 +20,7 @@
 
 ## 📦 Installation
 
-```bash
+```bashF
 npm install vanilla-table
 ```
 
@@ -31,13 +31,7 @@ Or use directly in the browser:
 <link rel="stylesheet" href="path/to/vanilla-table/src/table.css" />
 
 <!-- Include all JavaScript modules -->
-<script src="path/to/vanilla-table/src/core.js"></script>
-<script src="path/to/vanilla-table/src/render.js"></script>
-<script src="path/to/vanilla-table/src/sort.js"></script>
-<script src="path/to/vanilla-table/src/filters.js"></script>
-<script src="path/to/vanilla-table/src/pagination.js"></script>
-<script src="path/to/vanilla-table/src/exports.js"></script>
-<script src="path/to/vanilla-table/index.js"></script>
+<script src="path/to/vanilla-table/dist/vanilla-table-0.4.0.js"></script>
 ```
 
 ## 🚀 Quick Start
